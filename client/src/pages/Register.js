@@ -167,7 +167,7 @@ function Register() {
                             </div>
                             <div class="alert-text signup__alert">
                                 <span class="help__text">
-                                    At least 8 character
+                                    At least 6 character.
                                 </span>
                             </div>
                             <div class="group button-group">
