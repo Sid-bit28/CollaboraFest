@@ -23,7 +23,7 @@ app.use(express.json());
 
 // Dummy Route
 app.get('/', (req, res) => {
-    res.send('Welcome User');
+    res.json({ msg: 'Welcome User' });
 });
 
 app.use('/api/v1/auth', authRouter);
