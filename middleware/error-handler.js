@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
 const errorHandlerMiddleware = (err, req, res, next) => {
-    console.log(err.message);
+    console.log(err);
 
     // Final returning object.
     const defaultError = {
@@ -28,7 +28,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
             err.keyValue
         )} field has to be unique.`;
     }
-    // res.status(defaultError.statusCode).json({ msg: err });
     res.status(defaultError.statusCode).json({ msg: defaultError.msg });
 };
 
