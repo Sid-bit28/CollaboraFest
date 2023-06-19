@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Register, Error, Landing } from './pages';
+import { Register, Error, Landing, ProtectedRoute } from './pages';
 import {
     AddEvent,
     AllEvents,
@@ -12,7 +12,14 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<SharedLayout />}>
+                <Route
+                    path="/"
+                    element={
+                        <ProtectedRoute>
+                            <SharedLayout />
+                        </ProtectedRoute>
+                    }
+                >
                     <Route index element={<AllEvents />}></Route>
                     <Route path="stats" element={<Stats />}></Route>
                     <Route path="add-event" element={<AddEvent />}></Route>
