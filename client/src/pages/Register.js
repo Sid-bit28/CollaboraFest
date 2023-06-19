@@ -15,7 +15,7 @@ function Register() {
     const [toggle, setToggle] = useState(false);
 
     // global state and useNavigate
-    const { user, isLoading, registerUser, loginUser } = useAppContext();
+    const { user, isLoading, setupUser } = useAppContext();
     const navigate = useNavigate();
 
     const handleChange = (event) => {
@@ -32,9 +32,17 @@ function Register() {
         const currentUser = { name, email, password };
 
         if (isMember) {
-            loginUser(currentUser);
+            setupUser({
+                currentUser,
+                endPoint: 'login',
+                alertText: 'Login Successful',
+            });
         } else {
-            registerUser(currentUser);
+            setupUser({
+                currentUser,
+                endPoint: 'register',
+                alertText: 'Registration Successful',
+            });
         }
     };
 

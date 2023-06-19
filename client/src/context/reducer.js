@@ -1,12 +1,9 @@
 import {
     DISPLAY_ALERT,
     CLEAR_ALERT,
-    REGISTER_USER_BEGIN,
-    REGISTER_USER_SUCCESS,
-    REGISTER_USER_ERROR,
-    LOGIN_USER_BEGIN,
-    LOGIN_USER_SUCCESS,
-    LOGIN_USER_ERROR,
+    SETUP_USER_BEGIN,
+    SETUP_USER_SUCCESS,
+    SETUP_USER_ERROR,
 } from './actions';
 
 const reducer = (state, action) => {
@@ -26,13 +23,13 @@ const reducer = (state, action) => {
             alertText: '',
         };
     }
-    if (action.type === REGISTER_USER_BEGIN) {
+    if (action.type === SETUP_USER_BEGIN) {
         return {
             ...state,
             isLoading: true,
         };
     }
-    if (action.type === REGISTER_USER_SUCCESS) {
+    if (action.type === SETUP_USER_SUCCESS) {
         return {
             ...state,
             isLoading: false,
@@ -40,34 +37,12 @@ const reducer = (state, action) => {
             user: action.payload.user,
             userSkill: action.payload.skill,
             eventSkill: action.payload.skill,
-        };
-    }
-    if (action.type === REGISTER_USER_ERROR) {
-        return {
-            ...state,
-            isLoading: false,
             showAlert: true,
-            alertType: 'danger',
-            alertText: action.payload.message,
+            alertType: 'success',
+            alertText: action.payload.alertText,
         };
     }
-    if (action.type === LOGIN_USER_BEGIN) {
-        return {
-            ...state,
-            isLoading: true,
-        };
-    }
-    if (action.type === LOGIN_USER_SUCCESS) {
-        return {
-            ...state,
-            isLoading: false,
-            token: action.payload.token,
-            user: action.payload.user,
-            userSkill: action.payload.skill,
-            eventSkill: action.payload.skill,
-        };
-    }
-    if (action.type === LOGIN_USER_ERROR) {
+    if (action.type === SETUP_USER_ERROR) {
         return {
             ...state,
             isLoading: false,
