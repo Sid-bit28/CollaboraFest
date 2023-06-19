@@ -7,6 +7,9 @@ dotenv.config();
 // Remove try catch from every controller and throws error to the error-handler middleware
 import 'express-async-errors';
 
+// track the logging and request
+import morgan from 'morgan';
+
 // Database and authentication
 import connectDB from './db/connect.js';
 
@@ -18,13 +21,19 @@ import eventsRouter from './routes/eventsRoutes.js';
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
 
+// only for development purpose
+if (process.env.NODE_ENV !== 'production') {
+    app.use(morgan('dev'));
+}
+
 // JSON middleware to access JSON data.
 app.use(express.json());
 
 // Dummy Route
-// app.get('/', (req, res) => {
-//     res.json({ msg: 'Welcome User' });
-// });
+app.get('/', (req, res) => {
+    res.json({ msg: 'Welcome User' });
+});
+
 app.get('/api/v1', (req, res) => {
     res.json({ msg: 'API' });
 });
