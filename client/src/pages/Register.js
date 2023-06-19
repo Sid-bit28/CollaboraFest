@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
     name: '',
     email: '',
     password: '',
-    isMember: true,
+    isMember: false,
 };
 
 function Register() {
@@ -14,7 +15,8 @@ function Register() {
     const [toggle, setToggle] = useState(false);
 
     // global state and useNavigate
-    const { isLoading } = useAppContext();
+    const { user, isLoading, registerUser } = useAppContext();
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         setValues({
@@ -26,38 +28,54 @@ function Register() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log(event.target);
+        const { name, email, password, isMember } = values;
+        const currentUser = { name, email, password };
+
+        if (isMember) {
+            console.log('already a member');
+        } else {
+            registerUser(currentUser);
+        }
     };
+
+    useEffect(() => {
+        if (user) {
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+        }
+    }, [user, navigate]);
 
     const handleToggle = () => {
         setToggle(!toggle);
+        setValues({ ...values, isMember: !values.isMember });
     };
 
     let content;
 
     if (toggle) {
         content = (
-            <div class="container" id="container">
-                <div class="form-container  sign-in-container">
+            <div className="container" id="container">
+                <div className="form-container  sign-in-container">
                     <form onSubmit={handleSubmit}>
-                        <div class="header">Log In</div>
-                        <div class="social__media__container">
+                        <div className="header">Log In</div>
+                        <div className="social__media__container">
                             <a
                                 href="https://github.com/Sid-bit28"
-                                class="social google"
+                                className="social google"
                             >
-                                <i class="fa-brands fa-instagram"></i>
+                                <i className="fa-brands fa-instagram"></i>
                             </a>
                             <a
                                 href="https://github.com/Sid-bit28"
                                 target="_blank"
-                                class="social instagram"
+                                className="social instagram"
                             >
-                                <i class="fa-brands fa-instagram"></i>
+                                <i className="fa-brands fa-instagram"></i>
                             </a>
                         </div>
-                        <div class="button-input-group">
-                            <div class="group input-group">
+                        <div className="button-input-group">
+                            <div className="group input-group">
                                 <input
                                     type="email"
                                     placeholder="Email"
@@ -67,7 +85,7 @@ function Register() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div class="group input-group">
+                            <div className="group input-group">
                                 <input
                                     type="password"
                                     placeholder="Password"
@@ -77,15 +95,15 @@ function Register() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div class="alert-text signup__alert">
-                                <span class="help__text">
+                            <div className="alert-text signup__alert">
+                                <span className="help__text">
                                     At least 6 character.
                                 </span>
                             </div>
-                            <div class="group button-group">
+                            <div className="group button-group">
                                 <button
-                                    class="signin-btn"
-                                    onclick="return false;"
+                                    className="signin-btn"
+                                    disabled={isLoading}
                                 >
                                     Sign in
                                 </button>
@@ -93,17 +111,18 @@ function Register() {
                         </div>
                     </form>
                 </div>
-                <div class="overlay-container">
-                    <div class="overlay">
-                        <div class="overlay-panel overlay-right">
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-right">
                             <h1>Welcome Back!</h1>
                             <p>Please login your personal info.</p>
 
-                            <div class="group button-group">
+                            <div className="group button-group">
                                 <button
-                                    class="ghost"
+                                    className="ghost"
                                     id="signUp"
                                     onClick={handleToggle}
+                                    disabled={isLoading}
                                 >
                                     Sign up
                                 </button>
@@ -115,27 +134,27 @@ function Register() {
         );
     } else {
         content = (
-            <div class="container" id="container">
-                <div class="form-container  sign-up-container">
+            <div className="container" id="container">
+                <div className="form-container  sign-up-container">
                     <form onSubmit={handleSubmit}>
-                        <div class="header">Sign Up</div>
-                        <div class="social__media__container">
+                        <div className="header">Sign Up</div>
+                        <div className="social__media__container">
                             <a
                                 href="https://github.com/Sid-bit28"
-                                class="social google"
+                                className="social google"
                             >
-                                <i class="fa-brands fa-google"></i>
+                                <i className="fa-brands fa-google"></i>
                             </a>
                             <a
                                 href="https://github.com/Sid-bit28"
                                 target="_blank"
-                                class="social instagram"
+                                className="social instagram"
                             >
-                                <i class="fa-brands fa-instagram"></i>
+                                <i className="fa-brands fa-instagram"></i>
                             </a>
                         </div>
-                        <div class="button-input-group">
-                            <div class="group input-group">
+                        <div className="button-input-group">
+                            <div className="group input-group">
                                 <input
                                     type="text"
                                     placeholder="Name"
@@ -145,7 +164,7 @@ function Register() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div class="group input-group">
+                            <div className="group input-group">
                                 <input
                                     type="email"
                                     placeholder="Email"
@@ -155,7 +174,7 @@ function Register() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div class="group input-group">
+                            <div className="group input-group">
                                 <input
                                     type="password"
                                     placeholder="Password"
@@ -165,15 +184,15 @@ function Register() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div class="alert-text signup__alert">
-                                <span class="help__text">
+                            <div className="alert-text signup__alert">
+                                <span className="help__text">
                                     At least 6 character.
                                 </span>
                             </div>
-                            <div class="group button-group">
+                            <div className="group button-group">
                                 <button
-                                    class="signup-btn"
-                                    onclick="return false;"
+                                    className="signup-btn"
+                                    disabled={isLoading}
                                 >
                                     Sign Up
                                 </button>
@@ -181,19 +200,20 @@ function Register() {
                         </div>
                     </form>
                 </div>
-                <div class="overlay-container">
-                    <div class="overlay">
-                        <div class="overlay-panel overlay-right">
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-right">
                             <h1>Hello, Friend!</h1>
                             <p>
                                 Enter your personal details and start your
                                 journey with us
                             </p>
-                            <div class="group button-group">
+                            <div className="group button-group">
                                 <button
-                                    class="ghost"
+                                    className="ghost"
                                     id="signIn"
                                     onClick={handleToggle}
+                                    disabled={isLoading}
                                 >
                                     Log in
                                 </button>

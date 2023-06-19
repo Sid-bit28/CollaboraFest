@@ -22,8 +22,11 @@ import errorHandlerMiddleware from './middleware/error-handler.js';
 app.use(express.json());
 
 // Dummy Route
-app.get('/', (req, res) => {
-    res.json({ msg: 'Welcome User' });
+// app.get('/', (req, res) => {
+//     res.json({ msg: 'Welcome User' });
+// });
+app.get('/api/v1', (req, res) => {
+    res.json({ msg: 'API' });
 });
 
 app.use('/api/v1/auth', authRouter);
