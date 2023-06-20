@@ -7,6 +7,8 @@ import {
     SETUP_USER_BEGIN,
     SETUP_USER_SUCCESS,
     SETUP_USER_ERROR,
+    TOGGLE_SIDEBAR,
+    LOGOUT_USER,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -22,6 +24,7 @@ const initialState = {
     token: token,
     userSkill: userSkill || '',
     eventSkill: userSkill || '',
+    showSidebar: false,
 };
 
 const AppContext = React.createContext();
@@ -75,6 +78,15 @@ const AppProvider = ({ children }) => {
         clearAlert();
     };
 
+    const toggleSidebar = () => {
+        dispatch({ type: TOGGLE_SIDEBAR });
+    };
+
+    const logoutUser = () => {
+        dispatch({ type: LOGOUT_USER });
+        removeUserFromLocalStorage();
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -82,6 +94,8 @@ const AppProvider = ({ children }) => {
         addUserToLocalStorage,
         removeUserFromLocalStorage,
         setupUser,
+        toggleSidebar,
+        logoutUser,
     };
 
     return (

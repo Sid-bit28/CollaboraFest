@@ -71,16 +71,12 @@ function Register() {
                             <a
                                 href="https://github.com/Sid-bit28"
                                 className="social google"
-                            >
-                                <i className="fa-brands fa-instagram"></i>
-                            </a>
+                            ></a>
                             <a
                                 href="https://github.com/Sid-bit28"
                                 target="_blank"
                                 className="social instagram"
-                            >
-                                <i className="fa-brands fa-instagram"></i>
-                            </a>
+                            ></a>
                         </div>
                         <div className="button-input-group">
                             <div className="group input-group">
@@ -150,16 +146,12 @@ function Register() {
                             <a
                                 href="https://github.com/Sid-bit28"
                                 className="social google"
-                            >
-                                <i className="fa-brands fa-google"></i>
-                            </a>
+                            ></a>
                             <a
                                 href="https://github.com/Sid-bit28"
                                 target="_blank"
                                 className="social instagram"
-                            >
-                                <i className="fa-brands fa-instagram"></i>
-                            </a>
+                            ></a>
                         </div>
                         <div className="button-input-group">
                             <div className="group input-group">
