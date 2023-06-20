@@ -82,6 +82,23 @@ const Wrapper = styled.main`
     .group button:hover {
         background-color: var(--primary-700);
     }
+
+    .btn-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+        align-self: flex-end;
+        margin-top: 0.5rem;
+        button {
+            height: 35px;
+        }
+    }
+    .clear-btn {
+        background: var(--grey-500);
+    }
+    .clear-btn:hover {
+        background: var(--black);
+    }
 `;
 
 export default Wrapper;

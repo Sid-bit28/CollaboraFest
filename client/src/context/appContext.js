@@ -12,6 +12,11 @@ import {
     UPDATE_USER_BEGIN,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_ERROR,
+    HANDLE_CHANGE,
+    CLEAR_VALUES,
+    CREATE_EVENT_BEGIN,
+    CREATE_EVENT_SUCCESS,
+    CREATE_EVENT_ERROR,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -26,8 +31,13 @@ const initialState = {
     user: user ? JSON.parse(user) : null,
     token: token,
     userSkill: userSkill || '',
-    eventSkill: userSkill || '',
     showSidebar: false,
+    isEditing: false,
+    editEventId: '',
+    title: '',
+    description: '',
+    intake: 0,
+    eventSkill: userSkill || '',
 };
 
 const AppContext = React.createContext();
@@ -147,6 +157,36 @@ const AppProvider = ({ children }) => {
         clearAlert();
     };
 
+    const handleEventChange = ({ name, value }) => {
+        dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+    };
+
+    const clearValues = () => {
+        dispatch({ type: CLEAR_VALUES });
+    };
+
+    const createEvent = async () => {
+        dispatch({ type: CREATE_EVENT_BEGIN });
+        try {
+            console.log(state);
+            const { title, description, intake, eventSkill } = state;
+            await authFetch.post('/events', {
+                title,
+                description,
+                intake,
+                eventSkill,
+            });
+            dispatch({ type: CREATE_EVENT_SUCCESS });
+            dispatch({ type: CLEAR_VALUES });
+        } catch (error) {
+            if (error.response.status === 401) return;
+            dispatch({
+                type: CREATE_EVENT_ERROR,
+                payload: { msg: error.response.data.msg },
+            });
+        }
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -157,6 +197,9 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        handleEventChange,
+        clearValues,
+        createEvent,
     };
 
     return (
