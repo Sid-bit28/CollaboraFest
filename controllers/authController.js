@@ -57,21 +57,30 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const { email, name, lastName, skill } = req.body;
-    if (!email || !name || !lastName || !skill) {
-        throw new BadRequestError('Please provide all values');
+    // console.log(req.body);
+    // res.send('updateUser');
+    if (
+        !req.body.name ||
+        !req.body.email ||
+        !req.body.lastName ||
+        !req.body.skill
+    ) {
+        throw new BadRequestError('Please provide all the values');
     }
-    const user = await User.findOne({ _id: req.user.userId });
-    user.email = email;
-    user.name = name;
-    user.lastName = lastName;
-    user.skill = skill;
 
-    console.log(user);
+    const user = await User.findOne({ _id: req.user.userId });
+
+    user.email = req.body.email;
+    user.name = req.body.name;
+    user.lastName = req.body.lastName;
+    user.skill = req.body.skill;
 
     await user.save();
+
     const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ user, token, skill: user.skill });
+
+    console.log({ user, token, skill: user.skill });
+    res.status(StatusCodes.OK).send({ user, token, skill: user.skill });
 };
 
 export { register, login, updateUser };
