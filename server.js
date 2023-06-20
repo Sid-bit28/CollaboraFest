@@ -20,6 +20,7 @@ import eventsRouter from './routes/eventsRoutes.js';
 // Middleware
 import notFoundMiddleware from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
+import authenticateUser from './middleware/auth.js';
 
 // only for development purpose
 if (process.env.NODE_ENV !== 'production') {
@@ -39,7 +40,7 @@ app.get('/api/v1', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/events', eventsRouter);
+app.use('/api/v1/events', authenticateUser, eventsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
