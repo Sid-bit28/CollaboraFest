@@ -56,10 +56,11 @@ const Wrapper = styled.aside`
             transition: var(--transition);
         }
         .active {
-            color: var(--grey-900);
+            color: var(--white);
+            background-color: var(--primary-500);
         }
         .active .icon {
-            color: var(--primary-500);
+            color: var(--white);
         }
         .logo {
             margin-left: -2rem;
