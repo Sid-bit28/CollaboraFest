@@ -6,13 +6,13 @@ const EventSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Please provide title'],
             minlength: [3, 'Title must be at least 3 characters'],
-            maxlength: [20, 'Title must be less than 20 characters'],
+            maxlength: [50, 'Title must be less than 50 characters'],
         },
         description: {
             type: String,
             required: [true, 'Please provide description'],
             minlength: [3, 'Description must be at least 3 characters'],
-            maxlength: [50, 'Description must be less than 50 characters'],
+            maxlength: [200, 'Description must be less than 200 characters'],
         },
         intake: {
             type: Number,

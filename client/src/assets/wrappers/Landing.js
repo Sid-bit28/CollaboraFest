@@ -39,5 +39,8 @@ const Wrapper = styled.main`
             display: block;
         }
     }
+    .btn {
+        margin-top: 2rem;
+    }
 `;
 export default Wrapper;
