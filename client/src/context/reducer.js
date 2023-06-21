@@ -21,6 +21,7 @@ import {
     EDIT_EVENT_BEGIN,
     EDIT_EVENT_SUCCESS,
     EDIT_EVENT_ERROR,
+    CLEAR_FILTERS,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -214,6 +215,14 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'danger',
             alertText: action.payload.msg,
+        };
+    }
+    if (action.type === CLEAR_FILTERS) {
+        return {
+            ...state,
+            search: '',
+            searchEventSkill: '',
+            sort: 'latest',
         };
     }
     throw new Error(`No such action: ${action.type}`);

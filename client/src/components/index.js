@@ -9,6 +9,7 @@ import EventsContainer from './EventsContainer';
 import Event from './Event';
 import EventInfo from './EventInfo';
 import Loading from './Loading';
+import FormRowSelect from './FormRowSelect';
 
 export {
     Logo,
@@ -22,4 +23,5 @@ export {
     Event,
     EventsContainer,
     Loading,
+    FormRowSelect,
 };

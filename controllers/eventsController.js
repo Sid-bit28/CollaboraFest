@@ -16,7 +16,36 @@ const createEvent = async (req, res) => {
 
 // get all events 👇
 const getAllEvents = async (req, res) => {
-    const events = await Event.find({ createdBy: req.user.userId });
+    const { eventSkill, sort, search } = req.query;
+    const query = {
+        createdBy: req.user.userId,
+    };
+
+    // event skill sort 👇
+    if (eventSkill) {
+        query.eventSkill = { $regex: eventSkill, $options: 'i' };
+    }
+
+    // search title sort 👇
+    if (search) {
+        query.title = { $regex: search, $options: 'i' };
+    }
+    let result = Event.find(query);
+
+    // sort 👇
+    if (sort === 'latest') {
+        result = result.sort('-createdAt');
+    }
+    if (sort === 'oldest') {
+        result = result.sort('createdAt');
+    }
+    if (sort === 'a-z') {
+        result = result.sort('title');
+    }
+    if (sort === 'z-a') {
+        result = result.sort('-title');
+    }
+    const events = await result;
     res.status(StatusCodes.OK).json({
         events,
         totalEvents: events.length,

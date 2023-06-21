@@ -24,6 +24,7 @@ import {
     EDIT_EVENT_BEGIN,
     EDIT_EVENT_SUCCESS,
     EDIT_EVENT_ERROR,
+    CLEAR_FILTERS,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -48,6 +49,10 @@ const initialState = {
     events: [],
     totalEvents: 0,
     numOfPages: 1,
+    search: '',
+    searchEventSkill: '',
+    sort: 'latest',
+    sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 };
 
 const AppContext = React.createContext();
@@ -168,6 +173,7 @@ const AppProvider = ({ children }) => {
     };
 
     const handleEventChange = ({ name, value }) => {
+        console.log({ name, value });
         dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
     };
 
@@ -249,6 +255,10 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const clearFilters = () => {
+        dispatch({ type: CLEAR_FILTERS });
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -266,6 +276,7 @@ const AppProvider = ({ children }) => {
         setEditEvent,
         deleteEvent,
         editEvent,
+        clearFilters,
     };
 
     return (

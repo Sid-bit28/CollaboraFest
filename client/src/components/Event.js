@@ -29,6 +29,12 @@ function Event({ _id, title, description, intake, eventSkill, createdAt }) {
                         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
                             {eventSkill}
                         </span>
+                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                            #INTAKE
+                        </span>
+                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
+                            {intake}
+                        </span>
                         <div className="flex items-center">
                             <div className="text-sm">
                                 <p className="text-gray-900 leading-none">
