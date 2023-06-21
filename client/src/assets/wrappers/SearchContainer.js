@@ -25,11 +25,13 @@ const Wrapper = styled.section`
     .btn-block {
         align-self: end;
         margin-top: 2rem;
-        margin-left: 20rem;
     }
     @media (min-width: 768px) {
         .form-center {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .btn-block {
+            margin-top: 0;
         }
     }
     @media (min-width: 992px) {

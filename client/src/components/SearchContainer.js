@@ -47,6 +47,7 @@ function SearchContainer() {
                         handleChange={handleSearch}
                         list={sortOptions}
                     />
+                    <div></div>
                     <button
                         className="btn btn-block"
                         disabled={isLoading}

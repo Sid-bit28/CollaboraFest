@@ -1,6 +1,6 @@
 import { useAppContext } from '../context/appContext';
 import { useEffect } from 'react';
-import { Loading, Event } from '../components';
+import { Loading, Event, PageButtonContainer } from '../components';
 import Wrapper from '../assets/wrappers/JobsContainer';
 
 function EventsContainer() {
@@ -13,11 +13,12 @@ function EventsContainer() {
         search,
         searchEventSkill,
         sort,
+        numOfPages,
     } = useAppContext();
 
     useEffect(() => {
         getEvents();
-    }, [search, searchEventSkill, sort]);
+    }, [page, search, searchEventSkill, sort]);
 
     if (isLoading) {
         return <Loading center />;
@@ -41,6 +42,8 @@ function EventsContainer() {
                     return <Event key={event._id} {...event} />;
                 })}
             </div>
+            {numOfPages > 1}
+            <PageButtonContainer />
             {/* pagination daalne ka soche hain */}
         </Wrapper>
     );

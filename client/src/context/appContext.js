@@ -25,6 +25,7 @@ import {
     EDIT_EVENT_SUCCESS,
     EDIT_EVENT_ERROR,
     CLEAR_FILTERS,
+    CHANGE_PAGE,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -53,6 +54,7 @@ const initialState = {
     searchEventSkill: '',
     sort: 'latest',
     sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
+    page: 1,
 };
 
 const AppContext = React.createContext();
@@ -203,8 +205,8 @@ const AppProvider = ({ children }) => {
     };
 
     const getEvents = async () => {
-        const { search, searchEventSkill, sort } = state;
-        let url = `/events?sort=${sort}`;
+        const { page, search, searchEventSkill, sort } = state;
+        let url = `/events?page=${page}&sort=${sort}`;
         if (search) {
             url = url + `&search=${search}`;
         }
@@ -264,6 +266,10 @@ const AppProvider = ({ children }) => {
         dispatch({ type: CLEAR_FILTERS });
     };
 
+    const changePage = (page) => {
+        dispatch({ type: CHANGE_PAGE, payload: { page } });
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -282,6 +288,7 @@ const AppProvider = ({ children }) => {
         deleteEvent,
         editEvent,
         clearFilters,
+        changePage,
     };
 
     return (

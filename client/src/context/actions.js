@@ -31,3 +31,5 @@ export const EDIT_EVENT_SUCCESS = 'EDIT_EVENT_SUCCESS';
 export const EDIT_EVENT_ERROR = 'EDIT_EVENT_ERROR';
 
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
+
+export const CHANGE_PAGE = 'CHANGE_PAGE';
