@@ -13,6 +13,7 @@ function AddEvent() {
         handleEventChange,
         clearValues,
         createEvent,
+        editEvent,
     } = useAppContext();
 
     const handleSubmit = (e) => {
@@ -21,6 +22,7 @@ function AddEvent() {
             return;
         }
         if (isEditing) {
+            editEvent();
             return;
         }
         createEvent();
@@ -88,7 +90,11 @@ function AddEvent() {
                     </div>
                     <div className="group button-group btn-container">
                         <button disabled={isLoading}>
-                            {isLoading ? 'Please wait...' : 'Create Event.'}
+                            {isLoading
+                                ? 'Please wait...'
+                                : isEditing
+                                ? 'Edit Event'
+                                : 'Create Event'}
                         </button>
                         <button
                             disabled={isLoading}

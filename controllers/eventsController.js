@@ -1,6 +1,7 @@
 import Event from '../models/Event.js';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError, UnAuthenticatedError } from '../errors/index.js';
+import { BadRequestError, NotFoundError } from '../errors/index.js';
+import checkPermissions from '../utils/checkPermissions.js';
 
 // create new event 👇
 const createEvent = async (req, res) => {
@@ -24,10 +25,41 @@ const getAllEvents = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
-    res.send('update event');
+    const { id: eventId } = req.params;
+    const { title, description, intake, eventSkill } = req.body;
+    if (!title || !description || !eventSkill || !intake) {
+        throw new BadRequestError('Please provide all the values');
+    }
+    const event = await Event.findOne({ _id: eventId });
+    if (!event) {
+        throw new NotFoundError('Event not found');
+    }
+
+    // check for permissions 👇
+    checkPermissions(req.user, event.createdBy);
+
+    const updateEvent = await Event.findOneAndUpdate(
+        { _id: eventId },
+        req.body,
+        {
+            new: true,
+            runValidators: true,
+        }
+    );
+    res.status(StatusCodes.OK).json({ updateEvent });
 };
 const deleteEvent = async (req, res) => {
-    res.send('delete event');
+    const { id: eventId } = req.params;
+    const event = await Event.findOne({ _id: eventId });
+    if (!event) {
+        throw new NotFoundError('Event not found');
+    }
+
+    // check for permissions 👇
+    checkPermissions(req.user, event.createdBy);
+
+    await event.deleteOne();
+    res.status(StatusCodes.OK).json({ msg: 'Success event removed.' });
 };
 const showStats = async (req, res) => {
     res.send('show stats');

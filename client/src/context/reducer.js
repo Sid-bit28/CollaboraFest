@@ -16,6 +16,11 @@ import {
     CREATE_EVENT_ERROR,
     GET_EVENTS_BEGIN,
     GET_EVENTS_SUCCESS,
+    SET_EDIT_EVENT,
+    DELETE_EVENT_BEGIN,
+    EDIT_EVENT_BEGIN,
+    EDIT_EVENT_SUCCESS,
+    EDIT_EVENT_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -148,7 +153,7 @@ const reducer = (state, action) => {
             isLoading: false,
             showAlert: true,
             alertType: 'danger',
-            alertText: action.payload.message,
+            alertText: action.payload.msg,
         };
     }
     if (action.type === GET_EVENTS_BEGIN) {
@@ -164,6 +169,51 @@ const reducer = (state, action) => {
             events: action.payload.events,
             totalEvents: action.payload.totalEvents,
             numOfPages: action.payload.numOfPages,
+        };
+    }
+    if (action.type === SET_EDIT_EVENT) {
+        const event = state.events.find(
+            (event) => event._id === action.payload.id
+        );
+        const { _id, title, description, intake, eventSkill } = event;
+        return {
+            ...state,
+            isEditing: true,
+            editEventId: _id,
+            title,
+            description,
+            intake,
+            eventSkill,
+        };
+    }
+    if (action.type === DELETE_EVENT_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === EDIT_EVENT_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === EDIT_EVENT_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: 'success',
+            alertText: 'Job updated successfully',
+        };
+    }
+    if (action.type === EDIT_EVENT_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: 'danger',
+            alertText: action.payload.msg,
         };
     }
     throw new Error(`No such action: ${action.type}`);

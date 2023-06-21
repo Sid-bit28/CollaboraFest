@@ -19,6 +19,11 @@ import {
     CREATE_EVENT_ERROR,
     GET_EVENTS_BEGIN,
     GET_EVENTS_SUCCESS,
+    SET_EDIT_EVENT,
+    DELETE_EVENT_BEGIN,
+    EDIT_EVENT_BEGIN,
+    EDIT_EVENT_SUCCESS,
+    EDIT_EVENT_ERROR,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -208,10 +213,40 @@ const AppProvider = ({ children }) => {
     };
 
     const setEditEvent = (id) => {
-        console.log(`set edit job : ${id}`);
+        dispatch({ type: SET_EDIT_EVENT, payload: { id } });
     };
-    const deleteEvent = (id) => {
-        console.log(`delete job : ${id}`);
+
+    const editEvent = async () => {
+        dispatch({ type: EDIT_EVENT_BEGIN });
+        try {
+            const { id, title, description, intake, eventSkill } = state;
+            await authFetch.patch(`/events/${state.editEventId}`, {
+                title,
+                description,
+                intake,
+                eventSkill,
+            });
+            dispatch({ type: EDIT_EVENT_SUCCESS });
+            dispatch({ type: CLEAR_VALUES });
+        } catch (error) {
+            if (error.response.status == 401) {
+                dispatch({
+                    type: EDIT_EVENT_ERROR,
+                    payload: { msg: error.response.data.msg },
+                });
+            }
+        }
+    };
+
+    const deleteEvent = async (eventId) => {
+        dispatch({ type: DELETE_EVENT_BEGIN });
+        try {
+            await authFetch.delete(`/events/${eventId}`);
+            getEvents();
+        } catch (error) {
+            console.log(error.response);
+            logoutUser();
+        }
     };
 
     const valuesToShare = {
@@ -230,6 +265,7 @@ const AppProvider = ({ children }) => {
         getEvents,
         setEditEvent,
         deleteEvent,
+        editEvent,
     };
 
     return (
