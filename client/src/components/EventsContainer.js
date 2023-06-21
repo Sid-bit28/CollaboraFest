@@ -4,11 +4,20 @@ import { Loading, Event } from '../components';
 import Wrapper from '../assets/wrappers/JobsContainer';
 
 function EventsContainer() {
-    const { getEvents, events, isLoading, page, totalEvents } = useAppContext();
+    const {
+        getEvents,
+        events,
+        isLoading,
+        page,
+        totalEvents,
+        search,
+        searchEventSkill,
+        sort,
+    } = useAppContext();
 
     useEffect(() => {
         getEvents();
-    }, []);
+    }, [search, searchEventSkill, sort]);
 
     if (isLoading) {
         return <Loading center />;

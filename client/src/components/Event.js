@@ -4,7 +4,7 @@ import { useAppContext } from '../context/appContext';
 import Wrapper from '../assets/wrappers/Event';
 
 function Event({ _id, title, description, intake, eventSkill, createdAt }) {
-    const { setEditEvent, deleteEvent } = useAppContext();
+    const { user, setEditEvent, deleteEvent } = useAppContext();
 
     // Date formated using momentjs 👇
     let date = moment(createdAt);
@@ -23,25 +23,21 @@ function Event({ _id, title, description, intake, eventSkill, createdAt }) {
                         <p className="text-gray-700 text-base">{description}</p>
                     </div>
                     <div>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                            #SKILLS
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
-                            {eventSkill}
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                            #INTAKE
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
-                            {intake}
-                        </span>
-                        <div className="flex items-center">
-                            <div className="text-sm">
-                                <p className="text-gray-900 leading-none">
-                                    Jonathan Reinink
-                                </p>
-                                <p className="text-gray-600">{date}</p>
-                            </div>
+                        <div>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
+                                #SKILL : {eventSkill}
+                            </span>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
+                                #CREATED BY : {user.name}
+                            </span>
+                        </div>
+                        <div>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                #INTAKE: {intake}
+                            </span>
+                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
+                                #CREATED AT : {date}
+                            </span>
                         </div>
                     </div>
                     <div className="footer">

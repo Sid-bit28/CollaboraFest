@@ -173,7 +173,6 @@ const AppProvider = ({ children }) => {
     };
 
     const handleEventChange = ({ name, value }) => {
-        console.log({ name, value });
         dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
     };
 
@@ -204,7 +203,14 @@ const AppProvider = ({ children }) => {
     };
 
     const getEvents = async () => {
-        let url = `/events`;
+        const { search, searchEventSkill, sort } = state;
+        let url = `/events?sort=${sort}`;
+        if (search) {
+            url = url + `&search=${search}`;
+        }
+        if (searchEventSkill) {
+            url = url + `&eventSkill=${searchEventSkill}`;
+        }
         dispatch({ type: GET_EVENTS_BEGIN });
         try {
             const { data } = await authFetch(url);
@@ -250,7 +256,6 @@ const AppProvider = ({ children }) => {
             await authFetch.delete(`/events/${eventId}`);
             getEvents();
         } catch (error) {
-            console.log(error.response);
             logoutUser();
         }
     };

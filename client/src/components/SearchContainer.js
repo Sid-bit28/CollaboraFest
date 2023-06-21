@@ -1,5 +1,5 @@
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/StatsContainer';
+import Wrapper from '../assets/wrappers/SearchContainer';
 import { FormRow, FormRowSelect } from '.';
 
 function SearchContainer() {
