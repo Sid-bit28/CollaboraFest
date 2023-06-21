@@ -15,8 +15,14 @@ const createEvent = async (req, res) => {
 
 // get all events 👇
 const getAllEvents = async (req, res) => {
-    res.send('get all events');
+    const events = await Event.find({ createdBy: req.user.userId });
+    res.status(StatusCodes.OK).json({
+        events,
+        totalEvents: events.length,
+        numOfPages: 1,
+    });
 };
+
 const updateEvent = async (req, res) => {
     res.send('update event');
 };

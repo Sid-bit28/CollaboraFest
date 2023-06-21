@@ -1,5 +1,12 @@
+import { EventsContainer, SearchContainer } from '../../components';
+
 function AllEvents() {
-    return <h1>All events page</h1>;
+    return (
+        <>
+            <SearchContainer />
+            <EventsContainer />
+        </>
+    );
 }
 
 export default AllEvents;

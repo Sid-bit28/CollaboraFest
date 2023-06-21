@@ -14,6 +14,8 @@ import {
     CREATE_EVENT_BEGIN,
     CREATE_EVENT_SUCCESS,
     CREATE_EVENT_ERROR,
+    GET_EVENTS_BEGIN,
+    GET_EVENTS_SUCCESS,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -147,6 +149,21 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'danger',
             alertText: action.payload.message,
+        };
+    }
+    if (action.type === GET_EVENTS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === GET_EVENTS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            events: action.payload.events,
+            totalEvents: action.payload.totalEvents,
+            numOfPages: action.payload.numOfPages,
         };
     }
     throw new Error(`No such action: ${action.type}`);

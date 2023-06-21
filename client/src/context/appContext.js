@@ -17,6 +17,8 @@ import {
     CREATE_EVENT_BEGIN,
     CREATE_EVENT_SUCCESS,
     CREATE_EVENT_ERROR,
+    GET_EVENTS_BEGIN,
+    GET_EVENTS_SUCCESS,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -38,6 +40,9 @@ const initialState = {
     description: '',
     intake: 0,
     eventSkill: userSkill || '',
+    events: [],
+    totalEvents: 0,
+    numOfPages: 1,
 };
 
 const AppContext = React.createContext();
@@ -187,6 +192,28 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const getEvents = async () => {
+        let url = `/events`;
+        dispatch({ type: GET_EVENTS_BEGIN });
+        try {
+            const { data } = await authFetch(url);
+            const { events, totalEvents, numOfPages } = data;
+            dispatch({
+                type: GET_EVENTS_SUCCESS,
+                payload: { events, totalEvents, numOfPages },
+            });
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
+    const setEditEvent = (id) => {
+        console.log(`set edit job : ${id}`);
+    };
+    const deleteEvent = (id) => {
+        console.log(`delete job : ${id}`);
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -200,6 +227,9 @@ const AppProvider = ({ children }) => {
         handleEventChange,
         clearValues,
         createEvent,
+        getEvents,
+        setEditEvent,
+        deleteEvent,
     };
 
     return (
