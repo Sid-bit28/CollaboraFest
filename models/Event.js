@@ -21,7 +21,7 @@ const EventSchema = new mongoose.Schema(
         },
         eventSkill: {
             type: String,
-            maxlength: [10, 'skill must be less than 20 characters'],
+            maxlength: [50, 'skill must be less than 50 characters'],
             default: 'MERN',
             required: true,
         },
