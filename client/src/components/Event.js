@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import Wrapper from '../assets/wrappers/Event';
 
-function Event({ _id, title, description, intake, eventSkill, createdAt }) {
+function Event({
+    edit,
+    _id,
+    title,
+    description,
+    intake,
+    eventSkill,
+    createdAt,
+}) {
     const { user, setEditEvent, deleteEvent } = useAppContext();
 
     // Date formated using momentjs 👇
@@ -40,24 +48,28 @@ function Event({ _id, title, description, intake, eventSkill, createdAt }) {
                             </span>
                         </div>
                     </div>
-                    <div className="footer">
-                        <div className="actions">
-                            <Link
-                                to="/add-event"
-                                className="btn edit-btn"
-                                onClick={() => setEditEvent(_id)}
-                            >
-                                Edit
-                            </Link>
-                            <button
-                                type="button"
-                                className="btn delete-btn"
-                                onClick={() => deleteEvent(_id)}
-                            >
-                                Delete
-                            </button>
+                    {edit === 'yes' ? (
+                        <div className="footer">
+                            <div className="actions">
+                                <Link
+                                    to="/add-event"
+                                    className="btn edit-btn"
+                                    onClick={() => setEditEvent(_id)}
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    type="button"
+                                    className="btn delete-btn"
+                                    onClick={() => deleteEvent(_id)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div></div>
+                    )}
                 </div>
             </header>
         </Wrapper>

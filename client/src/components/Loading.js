@@ -2,7 +2,6 @@ import Wrapper from '../assets/wrappers/Loading';
 
 const Loading = ({ center }) => {
     return (
-        // <div className={center ? 'loading loading-center' : 'loading'}></div>
         <Wrapper>
             <div className="container">
                 <div className="line"></div>

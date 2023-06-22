@@ -1,7 +1,7 @@
 import AddEvent from './AddEvent';
 import AllEvents from './AllEvents';
 import Profile from './Profile';
-import Stats from './Stats';
+import MyEvents from './MyEvents';
 import SharedLayout from './SharedLayout';
 
-export { AddEvent, AllEvents, Profile, Stats, SharedLayout };
+export { AddEvent, AllEvents, Profile, MyEvents, SharedLayout };

@@ -7,10 +7,10 @@ import Navbar from './Navbar';
 import SearchContainer from './SearchContainer';
 import EventsContainer from './EventsContainer';
 import Event from './Event';
-import EventInfo from './EventInfo';
 import Loading from './Loading';
 import FormRowSelect from './FormRowSelect';
 import PageButtonContainer from './PageButtonContainer';
+import MyEventsContainer from './MyEventsContainer';
 
 export {
     Logo,
@@ -20,10 +20,10 @@ export {
     BigSidebar,
     SmallSidebar,
     SearchContainer,
-    EventInfo,
     Event,
     EventsContainer,
     Loading,
     FormRowSelect,
     PageButtonContainer,
+    MyEventsContainer,
 };

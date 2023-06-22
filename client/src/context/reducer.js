@@ -16,6 +16,8 @@ import {
     CREATE_EVENT_ERROR,
     GET_EVENTS_BEGIN,
     GET_EVENTS_SUCCESS,
+    GET_MY_EVENTS_BEGIN,
+    GET_MY_EVENTS_SUCCESS,
     SET_EDIT_EVENT,
     DELETE_EVENT_BEGIN,
     EDIT_EVENT_BEGIN,
@@ -172,6 +174,21 @@ const reducer = (state, action) => {
             events: action.payload.events,
             totalEvents: action.payload.totalEvents,
             numOfPages: action.payload.numOfPages,
+        };
+    }
+    if (action.type === GET_MY_EVENTS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === GET_MY_EVENTS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            myEvents: action.payload.events,
+            totalMyEvents: action.payload.totalEvents,
+            numOfMyPages: action.payload.numOfPages,
         };
     }
     if (action.type === SET_EDIT_EVENT) {

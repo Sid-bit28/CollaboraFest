@@ -19,6 +19,8 @@ import {
     CREATE_EVENT_ERROR,
     GET_EVENTS_BEGIN,
     GET_EVENTS_SUCCESS,
+    GET_MY_EVENTS_BEGIN,
+    GET_MY_EVENTS_SUCCESS,
     SET_EDIT_EVENT,
     DELETE_EVENT_BEGIN,
     EDIT_EVENT_BEGIN,
@@ -48,8 +50,11 @@ const initialState = {
     intake: 0,
     eventSkill: userSkill || '',
     events: [],
+    myEvents: [],
     totalEvents: 0,
+    totalMyEvents: 0,
     numOfPages: 1,
+    numOfMyPages: 1,
     search: '',
     searchEventSkill: '',
     sort: 'latest',
@@ -226,6 +231,29 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const getMyEvents = async () => {
+        const { page, search, searchEventSkill, sort } = state;
+        let url = `/events/my-events?page=${page}&sort=${sort}`;
+        if (search) {
+            url = url + `&search=${search}`;
+        }
+        if (searchEventSkill) {
+            url = url + `&eventSkill=${searchEventSkill}`;
+        }
+        dispatch({ type: GET_MY_EVENTS_BEGIN });
+        try {
+            const { data } = await authFetch(url);
+            console.log(data);
+            const { events, totalEvents, numOfPages } = data;
+            dispatch({
+                type: GET_MY_EVENTS_SUCCESS,
+                payload: { events, totalEvents, numOfPages },
+            });
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
     const setEditEvent = (id) => {
         dispatch({ type: SET_EDIT_EVENT, payload: { id } });
     };
@@ -233,7 +261,7 @@ const AppProvider = ({ children }) => {
     const editEvent = async () => {
         dispatch({ type: EDIT_EVENT_BEGIN });
         try {
-            const { id, title, description, intake, eventSkill } = state;
+            const { title, description, intake, eventSkill } = state;
             await authFetch.patch(`/events/${state.editEventId}`, {
                 title,
                 description,
@@ -243,7 +271,7 @@ const AppProvider = ({ children }) => {
             dispatch({ type: EDIT_EVENT_SUCCESS });
             dispatch({ type: CLEAR_VALUES });
         } catch (error) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
                 dispatch({
                     type: EDIT_EVENT_ERROR,
                     payload: { msg: error.response.data.msg },
@@ -289,6 +317,7 @@ const AppProvider = ({ children }) => {
         editEvent,
         clearFilters,
         changePage,
+        getMyEvents,
     };
 
     return (

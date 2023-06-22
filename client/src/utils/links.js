@@ -18,8 +18,8 @@ const links = [
     },
     {
         id: 3,
-        text: 'Stats',
-        path: 'stats',
+        text: 'My Events',
+        path: 'my-events',
         icons: <IoBarChartSharp />,
     },
     {

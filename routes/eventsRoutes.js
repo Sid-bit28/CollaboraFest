@@ -6,11 +6,11 @@ import {
     getAllEvents,
     updateEvent,
     deleteEvent,
-    showStats,
+    getMyEvents,
 } from '../controllers/eventsController.js';
 
 router.route('/').post(createEvent).get(getAllEvents);
-router.route('/stats').get(showStats);
+router.route('/my-events').get(getMyEvents);
 router.route('/:id').delete(deleteEvent).patch(updateEvent);
 
 export default router;

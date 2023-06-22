@@ -4,7 +4,7 @@ import {
     AddEvent,
     AllEvents,
     Profile,
-    Stats,
+    MyEvents,
     SharedLayout,
 } from './pages/dashboard';
 
@@ -21,7 +21,7 @@ function App() {
                     }
                 >
                     <Route index element={<AllEvents />}></Route>
-                    <Route path="stats" element={<Stats />}></Route>
+                    <Route path="my-events" element={<MyEvents />}></Route>
                     <Route path="add-event" element={<AddEvent />}></Route>
                     <Route path="profile" element={<Profile />}></Route>
                 </Route>
