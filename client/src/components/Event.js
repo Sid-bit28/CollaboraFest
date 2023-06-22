@@ -18,8 +18,15 @@ function Event({
     pending,
     message,
     name,
+    userID,
 }) {
-    const { setEditEvent, deleteEvent, sendRequest } = useAppContext();
+    const {
+        setEditEvent,
+        deleteEvent,
+        sendRequest,
+        deletePendingRequest,
+        acceptPendingRequest,
+    } = useAppContext();
 
     const [msg, handleMsgChange] = useState('Message..');
 
@@ -111,16 +118,19 @@ function Event({
                         <div className="footer">
                             <div className="actions">
                                 <Link
-                                    to="/add-event"
                                     className="btn edit-btn"
-                                    onClick={() => setEditEvent(_id)}
+                                    onClick={() =>
+                                        acceptPendingRequest({ _id, userID })
+                                    }
                                 >
                                     Accept
                                 </Link>
                                 <button
                                     type="button"
                                     className="btn delete-btn"
-                                    onClick={() => deleteEvent(_id)}
+                                    onClick={() =>
+                                        deletePendingRequest({ _id, userID })
+                                    }
                                 >
                                     Delete
                                 </button>

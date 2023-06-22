@@ -27,6 +27,10 @@ import {
     CHANGE_PAGE,
     GET_PENDING_MEMBERS_BEGIN,
     GET_PENDING_MEMBERS_SUCCESS,
+    DELETE_PENDING_MEMBERS_BEGIN,
+    DELETE_PENDING_MEMBERS_SUCCESS,
+    ACCEPT_PENDING_MEMBERS_BEGIN,
+    ACCEPT_PENDING_MEMBERS_SUCCESS,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -259,6 +263,36 @@ const reducer = (state, action) => {
         };
     }
     if (action.type === GET_PENDING_MEMBERS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            pendingMembersEvents: action.payload.events,
+            totalPendingMembersEvents: action.payload.totalEvents,
+            numOfPendingMembersPages: action.payload.numOfPages,
+        };
+    }
+    if (action.type === DELETE_PENDING_MEMBERS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === DELETE_PENDING_MEMBERS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            pendingMembersEvents: action.payload.events,
+            totalPendingMembersEvents: action.payload.totalEvents,
+            numOfPendingMembersPages: action.payload.numOfPages,
+        };
+    }
+    if (action.type === ACCEPT_PENDING_MEMBERS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === ACCEPT_PENDING_MEMBERS_SUCCESS) {
         return {
             ...state,
             isLoading: false,

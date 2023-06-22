@@ -30,6 +30,10 @@ import {
     CHANGE_PAGE,
     GET_PENDING_MEMBERS_BEGIN,
     GET_PENDING_MEMBERS_SUCCESS,
+    DELETE_PENDING_MEMBERS_BEGIN,
+    DELETE_PENDING_MEMBERS_SUCCESS,
+    ACCEPT_PENDING_MEMBERS_BEGIN,
+    ACCEPT_PENDING_MEMBERS_SUCCESS,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -341,6 +345,44 @@ const AppProvider = ({ children }) => {
         }
     };
 
+    const deletePendingRequest = async ({ _id, userID }) => {
+        dispatch({ type: DELETE_PENDING_MEMBERS_BEGIN });
+        try {
+            const { data } = await authFetch.post(`/events/pending-requests`, {
+                _id: _id,
+                id: userID,
+                action: 1,
+            });
+            const { events, totalEvents, numOfPages } = data;
+            dispatch({
+                type: DELETE_PENDING_MEMBERS_SUCCESS,
+                payload: { events, totalEvents, numOfPages },
+            });
+            getPendingMembers();
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
+    const acceptPendingRequest = async ({ _id, userID }) => {
+        dispatch({ type: ACCEPT_PENDING_MEMBERS_BEGIN });
+        try {
+            const { data } = await authFetch.post(`/events/pending-requests`, {
+                _id: _id,
+                id: userID,
+                action: 2,
+            });
+            const { events, totalEvents, numOfPages } = data;
+            dispatch({
+                type: ACCEPT_PENDING_MEMBERS_SUCCESS,
+                payload: { events, totalEvents, numOfPages },
+            });
+            getPendingMembers();
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -363,6 +405,8 @@ const AppProvider = ({ children }) => {
         getMyEvents,
         sendRequest,
         getPendingMembers,
+        deletePendingRequest,
+        acceptPendingRequest,
     };
 
     return (

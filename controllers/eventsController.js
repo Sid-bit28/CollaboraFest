@@ -220,6 +220,28 @@ const sendRequests = async (req, res) => {
     res.status(StatusCodes.OK).json({ event });
 };
 
+const deletePendingRequests = async (req, res) => {
+    const { _id, action, id } = req.body;
+    const event = await Event.findOne({ _id });
+    if (!event) {
+        throw new NotFoundError('Event not found');
+    }
+
+    event.pendingMembers.splice(event.pendingMembers.indexOf(id), 1);
+    if (action === 1) {
+        // delete 👇
+        event.rejectedMembers.push(id);
+    } else {
+        // accept 👇
+        event.acceptedMembers.push(id);
+    }
+
+    event.save();
+
+    // res.status(StatusCodes.OK).json({ msg: 'Success event removed.' });
+    res.status(StatusCodes.OK).json({ event });
+};
+
 export {
     createEvent,
     getAllEvents,
@@ -228,4 +250,5 @@ export {
     getMyEvents,
     pendingRequests,
     sendRequests,
+    deletePendingRequests,
 };

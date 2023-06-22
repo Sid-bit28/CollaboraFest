@@ -9,7 +9,6 @@ function PendingMembersContainer() {
         pendingMembersEvents,
         isLoading,
         page,
-        totalPendingMembersEvents,
         search,
         searchEventSkill,
         sort,
@@ -33,14 +32,18 @@ function PendingMembersContainer() {
     }
 
     let values = [];
+    let cnt = 1;
     pendingMembersEvents.map((event) => {
         event.pendingMembers.map((sm) => {
+            console.log(sm);
             values.push(
                 <Event
+                    key={cnt++}
                     pending="yes"
                     name={sm.name}
                     message={sm.message}
                     title={sm.title}
+                    userID={sm.id}
                     {...event}
                 />
             );
