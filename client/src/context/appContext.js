@@ -28,6 +28,7 @@ import {
     EDIT_EVENT_ERROR,
     CLEAR_FILTERS,
     CHANGE_PAGE,
+    SEND_REQUEST,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -60,6 +61,7 @@ const initialState = {
     sort: 'latest',
     sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
     page: 1,
+    message: '',
 };
 
 const AppContext = React.createContext();
@@ -180,6 +182,7 @@ const AppProvider = ({ children }) => {
     };
 
     const handleEventChange = ({ name, value }) => {
+        console.log(name, value);
         dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
     };
 
@@ -298,6 +301,18 @@ const AppProvider = ({ children }) => {
         dispatch({ type: CHANGE_PAGE, payload: { page } });
     };
 
+    const sendRequest = async ({ _id, msg }) => {
+        try {
+            await authFetch.patch('/events/pending-requests', {
+                id: _id,
+                message: msg,
+            });
+            getEvents();
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
     const valuesToShare = {
         ...state,
         displayAlert,
@@ -318,6 +333,7 @@ const AppProvider = ({ children }) => {
         clearFilters,
         changePage,
         getMyEvents,
+        sendRequest,
     };
 
     return (

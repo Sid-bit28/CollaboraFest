@@ -36,3 +36,5 @@ export const EDIT_EVENT_ERROR = 'EDIT_EVENT_ERROR';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
 
 export const CHANGE_PAGE = 'CHANGE_PAGE';
+
+export const SEND_REQUEST = 'SEND_REQUEST';

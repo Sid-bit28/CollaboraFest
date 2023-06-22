@@ -25,7 +25,11 @@ const EventSchema = new mongoose.Schema(
             default: 'MERN',
             required: true,
         },
-        members: {
+        pendingMembers: {
+            type: Array,
+            default: [],
+        },
+        acceptedMembers: {
             type: Array,
             default: [],
         },

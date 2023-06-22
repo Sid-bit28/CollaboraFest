@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FormRow, Alert } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashBoardForm';
 
@@ -14,10 +13,8 @@ function Profile() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!name || !email || !lastName || !skill) {
-            console.log('Pura bharo bc');
             return;
         }
-        console.log('update user');
         updateUser({ name, email, lastName, skill });
     };
 

@@ -2,6 +2,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import Wrapper from '../assets/wrappers/Event';
+import { FormRow } from '../components';
+import { useState } from 'react';
 
 function Event({
     edit,
@@ -12,12 +14,19 @@ function Event({
     eventSkill,
     createdAt,
     creator,
+    apply,
 }) {
-    const { user, setEditEvent, deleteEvent } = useAppContext();
+    const { setEditEvent, deleteEvent, sendRequest } = useAppContext();
+
+    const [msg, handleMsgChange] = useState('Message..');
 
     // Date formated using momentjs 👇
     let date = moment(createdAt);
     date = date.format('MMM d, YYYY');
+
+    const handleChange = (e) => {
+        handleMsgChange(e.target.value);
+    };
 
     return (
         <Wrapper>
@@ -70,6 +79,20 @@ function Event({
                         </div>
                     ) : (
                         <div></div>
+                    )}
+                    {apply === 'yes' ? (
+                        <div>
+                            <FormRow value={msg} handleChange={handleChange} />
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                type="button"
+                                onClick={() => sendRequest({ _id, msg })}
+                            >
+                                Apply
+                            </button>
+                        </div>
+                    ) : (
+                        ''
                     )}
                 </div>
             </header>

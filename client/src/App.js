@@ -6,6 +6,8 @@ import {
     Profile,
     MyEvents,
     SharedLayout,
+    PendingRequests,
+    MyTeams,
 } from './pages/dashboard';
 
 function App() {
@@ -24,6 +26,11 @@ function App() {
                     <Route path="my-events" element={<MyEvents />}></Route>
                     <Route path="add-event" element={<AddEvent />}></Route>
                     <Route path="profile" element={<Profile />}></Route>
+                    <Route
+                        path="pending-requests"
+                        element={<PendingRequests />}
+                    ></Route>
+                    <Route path="my-teams" element={<MyTeams />}></Route>
                 </Route>
                 <Route path="/register" element={<Register />}></Route>
                 <Route path="/landing" element={<Landing />}></Route>

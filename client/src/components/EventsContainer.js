@@ -39,7 +39,7 @@ function EventsContainer() {
             </h5>
             <div className="events">
                 {events.map((event) => {
-                    return <Event key={event._id} {...event} />;
+                    return <Event apply="yes" key={event._id} {...event} />;
                 })}
             </div>
             {numOfPages > 1}

@@ -19,6 +19,7 @@ const getAllEvents = async (req, res) => {
     const { eventSkill, sort, search } = req.query;
     const query = {
         createdBy: { $ne: req.user.userId },
+        'pendingMembers.id': { $ne: req.user.userId },
     };
 
     // event skill sort 👇
@@ -152,4 +153,36 @@ const getMyEvents = async (req, res) => {
     });
 };
 
-export { createEvent, getAllEvents, updateEvent, deleteEvent, getMyEvents };
+const pendingRequests = async (req, res) => {
+    const { id: eventId } = req.params;
+    const event = await Event.findOne({ _id: eventId });
+    if (!event) {
+        throw new NotFoundError('Event not found');
+    }
+
+    await event.deleteOne();
+    res.status(StatusCodes.OK).json({ msg: 'Success event removed.' });
+};
+
+const sendRequests = async (req, res) => {
+    const { id, message } = req.body;
+    const event = await Event.findOne({ _id: id });
+    if (!event) {
+        throw new NotFoundError('Event not found');
+    }
+
+    event.pendingMembers.push({ id: req.user.userId, message: message });
+    event.save();
+
+    res.status(StatusCodes.OK).json({ event });
+};
+
+export {
+    createEvent,
+    getAllEvents,
+    updateEvent,
+    deleteEvent,
+    getMyEvents,
+    pendingRequests,
+    sendRequests,
+};
