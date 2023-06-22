@@ -284,7 +284,7 @@ const AppProvider = ({ children }) => {
         dispatch({ type: DELETE_EVENT_BEGIN });
         try {
             await authFetch.delete(`/events/${eventId}`);
-            getEvents();
+            getMyEvents();
         } catch (error) {
             logoutUser();
         }

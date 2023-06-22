@@ -192,7 +192,7 @@ const reducer = (state, action) => {
         };
     }
     if (action.type === SET_EDIT_EVENT) {
-        const event = state.events.find(
+        const event = state.myEvents.find(
             (event) => event._id === action.payload.id
         );
         const { _id, title, description, intake, eventSkill } = event;
