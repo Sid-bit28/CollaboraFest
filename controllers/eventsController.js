@@ -20,6 +20,8 @@ const getAllEvents = async (req, res) => {
     const query = {
         createdBy: { $ne: req.user.userId },
         'pendingMembers.id': { $ne: req.user.userId },
+        'rejectedMembers.id': { $ne: req.user.userId },
+        'acceptedMembers.id': { $ne: req.user.userId },
     };
 
     // event skill sort 👇
@@ -230,15 +232,14 @@ const deletePendingRequests = async (req, res) => {
     event.pendingMembers.splice(event.pendingMembers.indexOf(id), 1);
     if (action === 1) {
         // delete 👇
-        event.rejectedMembers.push(id);
+        event.rejectedMembers.push({ id: id });
     } else {
         // accept 👇
-        event.acceptedMembers.push(id);
+        event.acceptedMembers.push({ id: id });
     }
 
     event.save();
 
-    // res.status(StatusCodes.OK).json({ msg: 'Success event removed.' });
     res.status(StatusCodes.OK).json({ event });
 };
 
