@@ -11,6 +11,7 @@ function Event({
     intake,
     eventSkill,
     createdAt,
+    creator,
 }) {
     const { user, setEditEvent, deleteEvent } = useAppContext();
 
@@ -36,7 +37,7 @@ function Event({
                                 #SKILL : {eventSkill}
                             </span>
                             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
-                                #CREATED BY : {user.name}
+                                #CREATED BY : {creator}
                             </span>
                         </div>
                         <div>

@@ -34,6 +34,10 @@ const EventSchema = new mongoose.Schema(
             ref: 'User',
             required: [true, 'Please provide user'],
         },
+        creator: {
+            type: String,
+            default: '',
+        },
     },
     { timestamps: true }
 );

@@ -190,13 +190,13 @@ const AppProvider = ({ children }) => {
     const createEvent = async () => {
         dispatch({ type: CREATE_EVENT_BEGIN });
         try {
-            console.log(state);
-            const { title, description, intake, eventSkill } = state;
+            const { title, description, intake, eventSkill, user } = state;
             await authFetch.post('/events', {
                 title,
                 description,
                 intake,
                 eventSkill,
+                creator: user.name,
             });
             dispatch({ type: CREATE_EVENT_SUCCESS });
             dispatch({ type: CLEAR_VALUES });
