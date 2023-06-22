@@ -11,6 +11,7 @@ import Loading from './Loading';
 import FormRowSelect from './FormRowSelect';
 import PageButtonContainer from './PageButtonContainer';
 import MyEventsContainer from './MyEventsContainer';
+import PendingMembersContainer from './PendingMembersContainer';
 
 export {
     Logo,
@@ -26,4 +27,5 @@ export {
     FormRowSelect,
     PageButtonContainer,
     MyEventsContainer,
+    PendingMembersContainer,
 };

@@ -1,5 +1,12 @@
+import { PendingMembersContainer, SearchContainer } from '../../components';
+
 function PendingRequests() {
-    return <div>Pending Requests</div>;
+    return (
+        <>
+            <SearchContainer />
+            <PendingMembersContainer />
+        </>
+    );
 }
 
 export default PendingRequests;

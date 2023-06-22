@@ -154,24 +154,67 @@ const getMyEvents = async (req, res) => {
 };
 
 const pendingRequests = async (req, res) => {
-    const { id: eventId } = req.params;
-    const event = await Event.findOne({ _id: eventId });
-    if (!event) {
-        throw new NotFoundError('Event not found');
+    const { eventSkill, sort, search } = req.query;
+    const query = {
+        createdBy: req.user.userId,
+        pendingMembers: { $exists: true, $ne: [] },
+    };
+
+    // event skill sort 👇
+    if (eventSkill) {
+        query.eventSkill = { $regex: eventSkill, $options: 'i' };
     }
 
-    await event.deleteOne();
-    res.status(StatusCodes.OK).json({ msg: 'Success event removed.' });
+    // search title sort 👇
+    if (search) {
+        query.title = { $regex: search, $options: 'i' };
+    }
+    let result = Event.find(query);
+
+    // sort 👇
+    if (sort === 'latest') {
+        result = result.sort('-createdAt');
+    }
+    if (sort === 'oldest') {
+        result = result.sort('createdAt');
+    }
+    if (sort === 'a-z') {
+        result = result.sort('title');
+    }
+    if (sort === 'z-a') {
+        result = result.sort('-title');
+    }
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+    result = result.skip(skip).limit(limit);
+    const events = await result;
+
+    const totalEvents = await Event.countDocuments(query);
+    const numOfPages = Math.ceil(totalEvents / limit);
+
+    res.status(StatusCodes.OK).json({
+        events,
+        totalEvents,
+        numOfPages,
+    });
 };
 
 const sendRequests = async (req, res) => {
-    const { id, message } = req.body;
+    const { id, name, message } = req.body;
     const event = await Event.findOne({ _id: id });
     if (!event) {
         throw new NotFoundError('Event not found');
     }
 
-    event.pendingMembers.push({ id: req.user.userId, message: message });
+    event.pendingMembers.push({
+        id: req.user.userId,
+        name,
+        message,
+    });
+
     event.save();
 
     res.status(StatusCodes.OK).json({ event });

@@ -15,6 +15,9 @@ function Event({
     createdAt,
     creator,
     apply,
+    pending,
+    message,
+    name,
 }) {
     const { setEditEvent, deleteEvent, sendRequest } = useAppContext();
 
@@ -28,6 +31,13 @@ function Event({
         handleMsgChange(e.target.value);
     };
 
+    let content = description;
+    let contentt = creator;
+    if (pending === 'yes') {
+        content = message;
+        contentt = name;
+    }
+
     return (
         <Wrapper>
             <header>
@@ -38,7 +48,7 @@ function Event({
                         </div>
                     </header>
                     <div className="content">
-                        <p className="text-gray-700 text-base">{description}</p>
+                        <p className="text-gray-700 text-base">{content}</p>
                     </div>
                     <div>
                         <div>
@@ -46,7 +56,10 @@ function Event({
                                 #SKILL : {eventSkill}
                             </span>
                             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 uppercase">
-                                #CREATED BY : {creator}
+                                {pending === 'yes'
+                                    ? '#SEND BY: '
+                                    : '#CREATED BY : '}
+                                {contentt}
                             </span>
                         </div>
                         <div>
@@ -93,6 +106,28 @@ function Event({
                         </div>
                     ) : (
                         ''
+                    )}
+                    {pending === 'yes' ? (
+                        <div className="footer">
+                            <div className="actions">
+                                <Link
+                                    to="/add-event"
+                                    className="btn edit-btn"
+                                    onClick={() => setEditEvent(_id)}
+                                >
+                                    Accept
+                                </Link>
+                                <button
+                                    type="button"
+                                    className="btn delete-btn"
+                                    onClick={() => deleteEvent(_id)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div></div>
                     )}
                 </div>
             </header>

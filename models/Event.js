@@ -33,6 +33,10 @@ const EventSchema = new mongoose.Schema(
             type: Array,
             default: [],
         },
+        rejectedMembers: {
+            type: Array,
+            default: [],
+        },
         createdBy: {
             type: mongoose.Types.ObjectId,
             ref: 'User',

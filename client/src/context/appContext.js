@@ -28,7 +28,8 @@ import {
     EDIT_EVENT_ERROR,
     CLEAR_FILTERS,
     CHANGE_PAGE,
-    SEND_REQUEST,
+    GET_PENDING_MEMBERS_BEGIN,
+    GET_PENDING_MEMBERS_SUCCESS,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -52,10 +53,13 @@ const initialState = {
     eventSkill: userSkill || '',
     events: [],
     myEvents: [],
+    pendingMembersEvents: [],
     totalEvents: 0,
     totalMyEvents: 0,
+    totalPendingMembersEvents: 0,
     numOfPages: 1,
     numOfMyPages: 1,
+    numOfPendingMembersPages: 1,
     search: '',
     searchEventSkill: '',
     sort: 'latest',
@@ -302,12 +306,36 @@ const AppProvider = ({ children }) => {
     };
 
     const sendRequest = async ({ _id, msg }) => {
+        const { user } = state;
         try {
             await authFetch.patch('/events/pending-requests', {
                 id: _id,
+                name: user.name,
                 message: msg,
             });
             getEvents();
+        } catch (error) {
+            logoutUser();
+        }
+    };
+
+    const getPendingMembers = async () => {
+        const { page, search, searchEventSkill, sort } = state;
+        let url = `/events/pending-requests?page=${page}&sort=${sort}`;
+        if (search) {
+            url = url + `&search=${search}`;
+        }
+        if (searchEventSkill) {
+            url = url + `&eventSkill=${searchEventSkill}`;
+        }
+        dispatch({ type: GET_PENDING_MEMBERS_BEGIN });
+        try {
+            const { data } = await authFetch(url);
+            const { events, totalEvents, numOfPages } = data;
+            dispatch({
+                type: GET_PENDING_MEMBERS_SUCCESS,
+                payload: { events, totalEvents, numOfPages },
+            });
         } catch (error) {
             logoutUser();
         }
@@ -334,6 +362,7 @@ const AppProvider = ({ children }) => {
         changePage,
         getMyEvents,
         sendRequest,
+        getPendingMembers,
     };
 
     return (

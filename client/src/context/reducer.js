@@ -25,6 +25,8 @@ import {
     EDIT_EVENT_ERROR,
     CLEAR_FILTERS,
     CHANGE_PAGE,
+    GET_PENDING_MEMBERS_BEGIN,
+    GET_PENDING_MEMBERS_SUCCESS,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -248,6 +250,21 @@ const reducer = (state, action) => {
         return {
             ...state,
             page: action.payload.page,
+        };
+    }
+    if (action.type === GET_PENDING_MEMBERS_BEGIN) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+    if (action.type === GET_PENDING_MEMBERS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            pendingMembersEvents: action.payload.events,
+            totalPendingMembersEvents: action.payload.totalEvents,
+            numOfPendingMembersPages: action.payload.numOfPages,
         };
     }
     throw new Error(`No such action: ${action.type}`);
