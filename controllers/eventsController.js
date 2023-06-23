@@ -19,6 +19,7 @@ const getAllEvents = async (req, res) => {
     const { eventSkill, sort, search } = req.query;
     const query = {
         createdBy: { $ne: req.user.userId },
+        intake: { $gt: 0 },
         'pendingMembers.id': { $ne: req.user.userId },
         'rejectedMembers.id': { $ne: req.user.userId },
         'acceptedMembers.id': { $ne: req.user.userId },
@@ -111,6 +112,7 @@ const getMyEvents = async (req, res) => {
     const { eventSkill, sort, search } = req.query;
     const query = {
         createdBy: req.user.userId,
+        intake: { $gt: 0 },
     };
 
     // event skill sort 👇
@@ -160,6 +162,7 @@ const pendingRequests = async (req, res) => {
     const query = {
         createdBy: req.user.userId,
         pendingMembers: { $exists: true, $ne: [] },
+        intake: { $gt: 0 },
     };
 
     // event skill sort 👇
@@ -236,6 +239,9 @@ const deletePendingRequests = async (req, res) => {
     } else {
         // accept 👇
         event.acceptedMembers.push({ id: id });
+        if (event.intake >= 1) {
+            event.intake = event.intake - 1;
+        }
     }
 
     event.save();

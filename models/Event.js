@@ -17,7 +17,7 @@ const EventSchema = new mongoose.Schema(
         intake: {
             type: Number,
             required: [true, 'Please provide a number'],
-            min: 1,
+            min: 0,
         },
         eventSkill: {
             type: String,

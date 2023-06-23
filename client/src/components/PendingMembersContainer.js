@@ -57,7 +57,7 @@ function PendingMembersContainer() {
                 {values.length > 1 && 's'} found.
             </h5>
             <div className="events">{values}</div>
-            {numOfPendingMembersPages > 1}
+            {values.length > 1}
             <PageButtonContainer />
             {/* pagination daalne ka soche hain */}
         </Wrapper>
