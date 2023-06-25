@@ -1,5 +1,12 @@
+import { MyTeamsContainer, SearchContainer } from '../../components';
+
 function MyTeams() {
-    return <div>My Teams</div>;
+    return (
+        <>
+            <SearchContainer />
+            <MyTeamsContainer />
+        </>
+    );
 }
 
 export default MyTeams;

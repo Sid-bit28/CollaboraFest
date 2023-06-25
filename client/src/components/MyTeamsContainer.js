@@ -1,9 +1,9 @@
 import { useAppContext } from '../context/appContext';
 import { useEffect } from 'react';
-import { Loading, Event, PageButtonContainer } from '../components';
+import { Loading, TeamEvents, PageButtonContainer } from '.';
 import Wrapper from '../assets/wrappers/JobsContainer';
 
-function MyEventsContainer() {
+function MyTeamsContainer() {
     const {
         getMyEvents,
         myEvents,
@@ -40,14 +40,14 @@ function MyEventsContainer() {
             </h5>
             <div className="events">
                 {myEvents.map((event) => {
-                    return <Event key={event._id} edit="yes" {...event} />;
+                    return <TeamEvents key={event._id} {...event} />;
                 })}
             </div>
             {numOfMyPages >= 1}
-            <PageButtonContainer num={numOfMyPages} page={page} />
+            <PageButtonContainer />
             {/* pagination daalne ka soche hain */}
         </Wrapper>
     );
 }
 
-export default MyEventsContainer;
+export default MyTeamsContainer;

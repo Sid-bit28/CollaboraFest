@@ -42,8 +42,8 @@ function EventsContainer() {
                     return <Event apply="yes" key={event._id} {...event} />;
                 })}
             </div>
-            {numOfPages > 1}
-            <PageButtonContainer />
+            {numOfPages >= 1}
+            <PageButtonContainer num={numOfPages} page={page} />
             {/* pagination daalne ka soche hain */}
         </Wrapper>
     );

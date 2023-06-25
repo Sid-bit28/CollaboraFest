@@ -57,8 +57,8 @@ function PendingMembersContainer() {
                 {values.length > 1 && 's'} found.
             </h5>
             <div className="events">{values}</div>
-            {values.length > 1}
-            <PageButtonContainer />
+            {values.length >= 1}
+            <PageButtonContainer num={numOfPendingMembersPages} page={page} />
             {/* pagination daalne ka soche hain */}
         </Wrapper>
     );

@@ -2,15 +2,15 @@ import { useAppContext } from '../context/appContext';
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import Wrapper from '../assets/wrappers/PageBtnContainer';
 
-function PageButtonContainer() {
-    const { numOfPages, page, changePage } = useAppContext();
+function PageButtonContainer({ num, page }) {
+    const { changePage } = useAppContext();
 
-    const pages = Array.from({ length: numOfPages }, (_, index) => {
+    const pages = Array.from({ length: num }, (_, index) => {
         return index + 1;
     });
     const nextPage = () => {
         let newPage = page + 1;
-        if (newPage > numOfPages) {
+        if (newPage > num) {
             newPage = 1;
         }
         changePage(newPage);
@@ -18,7 +18,7 @@ function PageButtonContainer() {
     const prevPage = () => {
         let newPage = page - 1;
         if (newPage < 1) {
-            newPage = numOfPages;
+            newPage = num;
         }
         changePage(newPage);
     };

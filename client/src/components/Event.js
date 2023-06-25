@@ -19,6 +19,7 @@ function Event({
     message,
     name,
     userID,
+    team,
 }) {
     const {
         setEditEvent,

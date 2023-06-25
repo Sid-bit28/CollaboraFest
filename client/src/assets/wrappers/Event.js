@@ -55,6 +55,10 @@ const Wrapper = styled.article`
     .content {
         padding: 1rem 1.5rem;
     }
+    .screen {
+        padding: 1rem 1.5rem;
+        height: 13rem;
+    }
     .content-center {
         display: grid;
         grid-template-columns: 1fr;
