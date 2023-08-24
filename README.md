@@ -1,2 +1,2 @@
-# Team-Finder
+# CollaboraFest
 A MERN stack application.
